@@ -1,3 +1,4 @@
+/*
 package com.example.pet.Daily;
 
 import androidx.room.Entity;
@@ -19,3 +20,4 @@ public class Streak {
         this.lastStreakDate = lastStreakDate;
     }
 }
+*/

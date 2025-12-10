@@ -18,10 +18,10 @@
             android:name=".Settings"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".OnBoadring.MainActivity2"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".Booking.BookingActivity"
@@ -30,7 +30,7 @@
             android:name=".Daily.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".OnBoadring.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

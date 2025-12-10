@@ -58,6 +58,7 @@ dependencies {
     // No additional plugins are necessary
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
 /*    implementation("androidx.room:room-runtime:$2.1.0")
     annotationProcessor("androidx.room:room-compiler:$2.1.0")*/

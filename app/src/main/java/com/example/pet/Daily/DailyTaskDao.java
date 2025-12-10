@@ -1,3 +1,4 @@
+/*
 package com.example.pet.Daily;
 
 import androidx.room.Dao;
@@ -21,4 +22,4 @@ public interface DailyTaskDao {
 
     @Query("DELETE FROM daily_tasks WHERE date != :today")
     void cleanupOldTasks(String today); // убираем старые
-}
+}*/

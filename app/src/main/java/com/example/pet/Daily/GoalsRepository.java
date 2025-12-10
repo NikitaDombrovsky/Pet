@@ -1,3 +1,4 @@
+/*
 package com.example.pet.Daily;
 
 import android.content.Context;
@@ -78,3 +79,4 @@ public class GoalsRepository {
         streakDao.updateStreak(streak);
     }
 }
+*/

@@ -15,7 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pet.Auth.Pet;
+import com.example.pet.Auth.PetRepository;
+import com.example.pet.Auth.UserRepository;
 import com.example.pet.Booking.BookingActivity;
+import com.example.pet.Daily.New.Tasks;
+import com.example.pet.Daily.New.TasksRepository;
 import com.example.pet.R;
 import com.example.pet.Settings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,7 +33,9 @@ import java.util.concurrent.Executors;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ProfileActivity extends AppCompatActivity {
 
-
+    PetRepository petRepository;
+    UserRepository userRepository;
+    TasksRepository tasksRepository;
     String today = LocalDate.now().toString();
     BottomNavigationView navigation;
     TextView PetName;
@@ -48,8 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String PREFS_FILE = "Account"; // Название "Базы данных" (Поменяешь и все сотрется)
     private static final String PREF_NAME = "Name"; // Название поля в БД, например Имя
-    private static final String PREF_MAIL = "Mail"; // Название поля в БД, например Имя
-    private static final String PREF_PASS = "Pass"; // Название поля в БД, например Имя
+//    private static final String PREF_MAIL = "Mail"; // Название поля в БД, например Имя
+//    private static final String PREF_PASS = "Pass"; // Название поля в БД, например Имя
     private static final String PREF_TYPE = "Type"; // Название поля в БД, например Имя
     private static final String PREF_GENDER = "Gender"; // Название поля в БД, например Имя
     private static final String PREF_AGE = "Age"; // Название поля в БД, например Имя
@@ -59,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final String PREF_PROFILE = "NameProfile";
     SharedPreferences settings;
 
-    GoalsRepository repository;
+  //  GoalsRepository repository;
     Executor executor;
 
     @Override
@@ -67,55 +74,22 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
-        settings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
 
-        repository = new GoalsRepository(this);
 
+
+        tasksRepository = new TasksRepository(this);
+        petRepository = new PetRepository(this);
         executor = Executors.newSingleThreadExecutor();
 
-        navigation = findViewById(R.id.mainNavigation);
-        PetName = findViewById(R.id.Name);
-        Gender = findViewById(R.id.Gender);
-        Type = findViewById(R.id.Type);
-        Age = findViewById(R.id.Age);
-        Weight = findViewById(R.id.Weight);
-        ProfileName = findViewById(R.id.profileTitle);
-        firstTask = findViewById(R.id.eattask);
-        secondTask = findViewById(R.id.walktask);
-        thirdTask = findViewById(R.id.caretask);
-        FirstCheck = findViewById(R.id.checkSnack);
-        SecondCheck = findViewById(R.id.checkWalk);
-        ThirdCheck = findViewById(R.id.checkBath);
-        Completed = findViewById(R.id.Comleted);
 
+        settings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
 
-        // получаем сохраненное имя
-        navigation = findViewById(R.id.mainNavigation);
-        PetName = findViewById(R.id.Name);
-        Gender = findViewById(R.id.Gender);
-        Type = findViewById(R.id.Type);
-        Age = findViewById(R.id.Age);
-        Weight = findViewById(R.id.Weight);
-        ProfileName = findViewById(R.id.profileTitle);
-        Breed = findViewById(R.id.Breed);
+       // repository = new GoalsRepository(this);
+        executor = Executors.newSingleThreadExecutor();
 
+        init();
 
-        String petName = settings.getString(PREF_NAME, "не определено");
-        String gender = settings.getString(PREF_GENDER, "не определено");
-        String type = settings.getString(PREF_TYPE, "не определено");
-        String age = settings.getString(PREF_AGE, "не определено");
-        String weight = settings.getString(PREF_WEIGHT, "не определено");
-        String breed = settings.getString(PREF_COLOUR, "не определено");
-        // PREF_NAME - наше название поля в БД; второе - значение "по умолчанию" если данных нет
-        PetName.setText(petName);
-        Gender.setText(gender);
-        Type.setText(type);
-        Age.setText(age);
-        Weight.setText(weight);
-        ProfileName.setText(petName);
-        Breed.setText(breed);
-
-        showTasks(type);
+        getPetData();
 
 
         FirstCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -126,10 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "---", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
-
         });
 
 
@@ -140,8 +111,6 @@ public class ProfileActivity extends AppCompatActivity {
             if (menuItem.getTitle().equals("Календарь")) {
                 startActivity(new Intent(this, BookingActivity.class));
             }
-
-
             return true;
         });
 
@@ -155,17 +124,62 @@ public class ProfileActivity extends AppCompatActivity {
             }*/
         // Загрузка задач
         executor.execute(() -> {
-            List<DailyTask> tasks = repository.loadOrCreateDailyTasks(today);
+            Tasks tasks = tasksRepository.getTasks(Type.getText().toString());
 
-            runOnUiThread(() -> showTasks(type));
+            firstTask.setText(tasks.firstTask);
+            secondTask.setText(tasks.secondTask);
+            thirdTask.setText(tasks.thirdTask);
+            //List<DailyTask> tasks = repository.loadOrCreateDailyTasks(today);
+
+            // TODO Хомячок
+            //showTasks("Кошка");
+            //runOnUiThread(() -> showTasks(type));
         });
 
 
 // Обновление стрика (вызываешь при запуске или при открытии экрана целей)
         executor.execute(() -> {
-            repository.updateStreakForToday(today);
+          //  repository.updateStreakForToday(today);
         });
 
+    }
+
+    private void getPetData() {
+        try {
+
+            Pet pet = petRepository.getPet();
+            PetName.setText(pet.petName);
+            Gender.setText(pet.gender);
+            Type.setText(pet.type);
+            Age.setText(pet.age);
+            Weight.setText(pet.weight);
+            Breed.setText(pet.breed);
+
+
+            ProfileName.setText(pet.petName);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void init() {
+        navigation = findViewById(R.id.mainNavigation);
+
+        PetName = findViewById(R.id.Name);
+        Gender = findViewById(R.id.Gender);
+        Type = findViewById(R.id.Type);
+        Age = findViewById(R.id.Age);
+        Weight = findViewById(R.id.Weight);
+        ProfileName = findViewById(R.id.profileTitle);
+        firstTask = findViewById(R.id.eattask);
+        secondTask = findViewById(R.id.walktask);
+        thirdTask = findViewById(R.id.caretask);
+        FirstCheck = findViewById(R.id.checkSnack);
+        SecondCheck = findViewById(R.id.checkWalk);
+        ThirdCheck = findViewById(R.id.checkBath);
+        Completed = findViewById(R.id.Comleted);
     }
 
     private void showTasks(String type) {

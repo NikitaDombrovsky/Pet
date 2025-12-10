@@ -1,3 +1,4 @@
+/*
 package com.example.pet.Daily;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -22,3 +23,4 @@ public class DailyTask {
         this.done = done;
     }
 }
+*/

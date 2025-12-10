@@ -1,3 +1,4 @@
+/*
 package com.example.pet.Daily;
 
 import androidx.room.Dao;
@@ -16,4 +17,4 @@ public interface StreakDao {
 
     @Update
     void updateStreak(Streak streak);
-}
+}*/

@@ -204,7 +204,7 @@
 
         <!-- Signup Button -->
         <com.google.android.material.button.MaterialButton
-            android:onClick="SignUp"
+
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="56dp"
