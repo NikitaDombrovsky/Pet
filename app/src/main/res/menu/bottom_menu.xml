@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/firstMenu"
+        android:title="Профиль"
+        android:icon="@drawable/prof"/>
+    <item
+        android:id="@+id/secondMenu"
+        android:title="Календарь"
+        android:icon="@drawable/calen"/>
+
+</menu>
