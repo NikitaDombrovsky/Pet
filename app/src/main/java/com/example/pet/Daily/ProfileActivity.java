@@ -180,6 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
         SecondCheck = findViewById(R.id.checkWalk);
         ThirdCheck = findViewById(R.id.checkBath);
         Completed = findViewById(R.id.Comleted);
+        Breed = findViewById(R.id.Breed);
     }
 
     private void showTasks(String type) {

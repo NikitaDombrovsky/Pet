@@ -1,7 +1,6 @@
 package com.example.pet.Auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText petBreedEditText;
 
 
-    EditText Weight;
+    EditText petWeightEditText;
     PetRepository repository;
     Executor executor;
     @Override
@@ -59,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         petAgeEditText = findViewById(R.id.etAge);
         petBreedEditText = findViewById(R.id.etColour);
 
-        Weight = findViewById(R.id.etWeight);
+        petWeightEditText = findViewById(R.id.etWeight);
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
@@ -90,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         String petGender = petGenderEditText.getText().toString();
         String age = petAgeEditText.getText().toString();
         String petBreed = petBreedEditText.getText().toString();
-        String weight = Weight.getText().toString();
+        String weight = petWeightEditText.getText().toString();
 
         String type = petTypeSpinner.getSelectedItem().toString();
 
