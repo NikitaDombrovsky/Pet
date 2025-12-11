@@ -3,10 +3,10 @@
     <item
         android:id="@+id/firstMenu"
         android:title="Профиль"
-        android:icon="@drawable/prof"/>
+        android:icon="@drawable/profile_icon"/>
     <item
         android:id="@+id/secondMenu"
         android:title="Календарь"
-        android:icon="@drawable/calen"/>
+        android:icon="@drawable/calendar_icon"/>
 
 </menu>

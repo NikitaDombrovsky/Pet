@@ -33,6 +33,7 @@ import java.util.concurrent.Executors;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ProfileActivity extends AppCompatActivity {
 
+
     PetRepository petRepository;
     UserRepository userRepository;
     TasksRepository tasksRepository;
@@ -52,6 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
     CheckBox SecondCheck;
     CheckBox ThirdCheck;
     TextView Completed;
+    TextView Tasks;
+    Tasks tasks;
 
     private static final String PREFS_FILE = "Account"; // Название "Базы данных" (Поменяешь и все сотрется)
     private static final String PREF_NAME = "Name"; // Название поля в БД, например Имя
@@ -68,6 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
 
   //  GoalsRepository repository;
     Executor executor;
+    int compl = 0;
+    int task = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
             }*/
         // Загрузка задач
         executor.execute(() -> {
-            Tasks tasks = tasksRepository.getTasks(Type.getText().toString());
+            tasks = tasksRepository.getTasks(Type.getText().toString());
 
             firstTask.setText(tasks.firstTask);
             secondTask.setText(tasks.secondTask);
@@ -137,10 +142,69 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+        FirstCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean b) {
+                if (b){
+                    Completed.setText(String.valueOf(compl += 1));
+                    Tasks.setText(String.valueOf(task -=1));
+                    tasks.firstDone = true;
+                } else{
+                    Completed.setText(String.valueOf(compl -= 1));
+                    Tasks.setText(String.valueOf(task +=1));
+                    tasks.firstDone = false;
+                }
+                tasksRepository.updateTasks(tasks);
+            }
+        });
+
+
+        SecondCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean b) {
+                if (b){
+                    Completed.setText(String.valueOf(compl += 1));
+                    Tasks.setText(String.valueOf(task -=1));
+                    tasks.secondDone = true;
+                } else{
+                    Completed.setText(String.valueOf(compl -= 1));
+                    Tasks.setText(String.valueOf(task +=1));
+                    tasks.secondDone = false;
+                }
+                tasksRepository.updateTasks(tasks);
+
+            }
+        });
+
+
+        ThirdCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean b) {
+                if (b){
+                    Completed.setText(String.valueOf(compl += 1));
+                    Tasks.setText(String.valueOf(task -=1));
+                    tasks.thirdDone = true;
+                } else{
+                    Completed.setText(String.valueOf(compl -= 1));
+                    Tasks.setText(String.valueOf(task +=1));
+                    tasks.thirdDone = false;
+                }
+                tasksRepository.updateTasks(tasks);
+            }
+        });
+
+
+
+
+
+
+
+
 // Обновление стрика (вызываешь при запуске или при открытии экрана целей)
         executor.execute(() -> {
           //  repository.updateStreakForToday(today);
         });
+
 
     }
 
@@ -181,6 +245,7 @@ public class ProfileActivity extends AppCompatActivity {
         ThirdCheck = findViewById(R.id.checkBath);
         Completed = findViewById(R.id.Comleted);
         Breed = findViewById(R.id.Breed);
+        Tasks = findViewById(R.id.tasks);
     }
 
     private void showTasks(String type) {

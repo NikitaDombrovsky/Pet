@@ -607,6 +607,7 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/tasks"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="3"
@@ -645,7 +646,7 @@
                                 android:id="@+id/Comleted"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:textColor="#4CAF50"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -664,34 +665,7 @@
                             android:layout_marginHorizontal="8dp"
                             android:background="#E0E0E0" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="📈"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="85%"
-                                android:textColor="#FF9800"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Прогресс"
-                                android:textColor="#666666"
-                                android:textSize="12sp" />
-                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

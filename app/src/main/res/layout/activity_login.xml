@@ -13,6 +13,7 @@
         android:padding="24dp">
 
         <Button
+            android:backgroundTint="@color/white"
             android:onClick="akfk"
             android:layout_width="122dp"
             android:layout_height="20dp"/>
